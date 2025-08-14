@@ -1,4 +1,8 @@
-# Hub75-64x32-hack.py
+# gamma-correction-demo.py
+# Shows an image on the left, with a label super-imposed.
+# Meant to be blinka python, swapping between original & gamma
+# corrected images. Find the lesson describing thish at:
+# https://bit.ly/circuitpython-school on YouTube.com/@BuildWithProfG
 import board, displayio, time, gc, random, math, rgbmatrix, framebufferio
 from adafruit_display_text.bitmap_label import Label
 from adafruit_bitmap_font import bitmap_font
@@ -7,7 +11,7 @@ from smooth_scroller import SmoothScroller
 # --- Display Setup ---
 displayio.release_displays()
 
-# === Setup for Pico ===
+# === Setup for Pico. Change if you use another board ===
 # Setup rgbmatrix display (change pins to match your wiring)
 matrix = rgbmatrix.RGBMatrix(
    width=64, # Change width & height if you have an LED matrix with different dimensions
@@ -40,10 +44,11 @@ display = framebufferio.FramebufferDisplay(matrix)
 group = displayio.Group() # creates an empy group
 display.root_group = group
 
-
-
 # read in image from board
-bitmap = displayio.OnDiskBitmap("/images/blinka.bmp") # read in image
+# In less I save the original uncorrected image as "blinka.bmp"
+# and the gamma-correct image as "blinka-gamma.bmp"
+# Place in images folder & swap name in String below to compare
+bitmap = displayio.OnDiskBitmap("/images/blinka-gamma.bmp") # read in image
 tilegrid = displayio.TileGrid(bitmap, pixel_shader=bitmap.pixel_shader)
 
 group.append(tilegrid)
